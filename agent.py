@@ -3,7 +3,7 @@ import json
 import re
 from typing import TypedDict, List, Dict, Any
 from langgraph.graph import StateGraph, END
-from langchain_ollama import ChatOllama
+from langchain_groq import ChatGroq
 
 # ── State ──────────────────────────────────────────────────────────────────────
 class WardrobeState(TypedDict):
@@ -15,7 +15,7 @@ class WardrobeState(TypedDict):
     error: str
 
 # ── LLM ───────────────────────────────────────────────────────────────────────
-llm = ChatOllama(model="gemma3:4b", temperature=0.7)
+llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.7, api_key=os.environ.get("GROQ_API_KEY"))
 
 # ── Node 1: Parse wardrobe + body info ────────────────────────────────────────
 def parse_wardrobe(state: WardrobeState) -> WardrobeState:
