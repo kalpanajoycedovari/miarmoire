@@ -144,7 +144,7 @@ def generate_images(state: WardrobeState) -> WardrobeState:
             response = requests.post(
                 api_url,
                 headers=headers,
-                json={"inputs": prompt, "parameters": {"num_inference_steps": 25, "guidance_scale": 7.5}},
+                json={"inputs": prompt},
                 timeout=120
             )
             if response.status_code == 200:
@@ -182,9 +182,10 @@ def build_graph():
 styling_agent = build_graph()
 
 
-def run_agent(user_input: str) -> WardrobeState:
+def run_agent(user_input: str, occasion: str = "Any") -> WardrobeState:
+    occasion_clause = f" All outfits must be suitable for: {occasion}." if occasion != "Any" else ""
     initial_state: WardrobeState = {
-        "user_input": user_input,
+        "user_input": user_input + occasion_clause,
         "wardrobe": {},
         "outfits": [],
         "image_prompts": [],

@@ -216,7 +216,14 @@ with right:
         label_visibility="collapsed"
     )
 
-    num_looks = st.selectbox("Number of Looks", [2, 3, 4, 5], index=2)
+    col_a, col_b = st.columns(2)
+    with col_a:
+        num_looks = st.selectbox("Number of Looks", [2, 3, 4, 5], index=2)
+    with col_b:
+        occasion_filter = st.selectbox("Occasion", [
+            "Any", "Casual", "Work / Office", "Evening Out",
+            "Date Night", "Weekend Brunch", "Formal Event", "Gym / Active"
+        ])
 
     c1, c2 = st.columns(2)
     with c1:
@@ -233,7 +240,7 @@ with right:
             if st.button("↺  Regenerate"):
                 with st.spinner("Regenerating…"):
                     try:
-                        result = run_agent(st.session_state.last_input)
+                        result = run_agent(st.session_state.last_input, st.session_state.get("last_occasion", "Any"))
                         st.session_state.results = result
                     except Exception as e:
                         st.error(str(e))
@@ -253,9 +260,10 @@ if go and user_input.strip():
     else:
         with st.spinner("Curating your looks…"):
             try:
-                result = run_agent(user_input)
+                result = run_agent(user_input, occasion_filter)
                 st.session_state.results = result
                 st.session_state.last_input = user_input
+                st.session_state.last_occasion = occasion_filter
             except Exception as e:
                 st.error(f"Agent error: {e}")
                 st.session_state.results = None
