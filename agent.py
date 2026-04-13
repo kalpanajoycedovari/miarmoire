@@ -136,7 +136,7 @@ def generate_images(state: WardrobeState) -> WardrobeState:
         return {**state, "error": "HF_TOKEN not set", "images": [""] * len(state["image_prompts"])}
 
     headers = {"Authorization": f"Bearer {hf_token}"}
-    api_url = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+    api_url = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
 
     images = []
     for prompt in state["image_prompts"]:
