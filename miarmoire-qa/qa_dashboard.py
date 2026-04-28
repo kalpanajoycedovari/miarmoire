@@ -1,9 +1,5 @@
 """
 Mi Armoire — Image Generation QA Dashboard
-A polished eval pipeline UI for running, scoring, and reviewing image gen quality.
-
-Usage:
-    streamlit run qa_dashboard.py
 """
 
 import streamlit as st
@@ -11,9 +7,6 @@ import streamlit.components.v1 as components
 import os
 import sys
 import json
-import time
-import datetime
-import base64
 import glob
 from dotenv import load_dotenv
 
@@ -23,31 +16,27 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 from test_prompts import TEST_PROMPTS
 
 st.set_page_config(
-    page_title="Mi Armoire — QA Dashboard",
+    page_title="Mi Armoire - QA Dashboard",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# ── Styles ─────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
   html, body, [class*="css"] { font-family: 'Jost', sans-serif; }
-  .stApp { background: #0f0d08; color: #faf6ee; }
+  .stApp { background: #faf6ee; color: #1c1608; }
 
-  /* Sidebar */
-  [data-testid="stSidebar"] { background: #1c1608 !important; border-right: 1px solid rgba(201,168,76,0.2); }
-  [data-testid="stSidebar"] * { color: #faf6ee !important; }
-  [data-testid="stSidebar"] .stSelectbox > div > div { background: #0f0d08 !important; border: 1px solid #c9a84c !important; }
-  [data-testid="stSidebar"] .stTextInput input { background: #0f0d08 !important; border: 1px solid #c9a84c !important; color: #faf6ee !important; }
-  [data-testid="stSidebar"] .stMultiSelect > div > div { background: #0f0d08 !important; border: 1px solid rgba(201,168,76,0.4) !important; }
+  [data-testid="stSidebar"] { background: #f0e8d5 !important; border-right: 1px solid rgba(201,168,76,0.3); }
+  [data-testid="stSidebar"] * { color: #1c1608 !important; }
+  [data-testid="stSidebar"] .stSelectbox > div > div { background: #faf6ee !important; border: 1px solid #c9a84c !important; }
+  [data-testid="stSidebar"] .stMultiSelect > div > div { background: #faf6ee !important; border: 1px solid rgba(201,168,76,0.4) !important; }
 
-  /* Buttons */
   .stButton > button {
     background: transparent !important;
-    color: #c9a84c !important;
+    color: #1c1608 !important;
     border: 1px solid #c9a84c !important;
     border-radius: 0 !important;
     padding: 0.7rem 1.8rem !important;
@@ -60,15 +49,8 @@ st.markdown("""
   }
   .stButton > button:hover { background: #c9a84c !important; color: #1c1608 !important; }
 
-  /* Run button primary */
-  .run-btn .stButton > button {
-    background: #c9a84c !important; color: #1c1608 !important;
-    font-weight: 500 !important;
-  }
-
-  /* Cards */
   .qa-card {
-    background: #1c1608;
+    background: #fff8ee;
     border: 1px solid rgba(201,168,76,0.2);
     padding: 1.5rem;
     margin-bottom: 1.2rem;
@@ -77,7 +59,7 @@ st.markdown("""
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.6rem;
     font-weight: 400;
-    color: #faf6ee;
+    color: #1c1608;
     margin-bottom: 0.2rem;
   }
   .look-meta {
@@ -93,7 +75,7 @@ st.markdown("""
     color: #8a7a50; margin-bottom: 0.25rem;
   }
   .score-bar-bg {
-    background: rgba(201,168,76,0.1);
+    background: rgba(201,168,76,0.15);
     height: 6px; width: 100%; position: relative;
   }
   .score-bar-fill {
@@ -109,14 +91,14 @@ st.markdown("""
     font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
     font-weight: 500; margin-left: 0.5rem;
   }
-  .badge-pass { background: rgba(76,201,120,0.15); color: #4cc978; border: 1px solid #4cc978; }
+  .badge-pass { background: rgba(76,201,120,0.15); color: #2a8a50; border: 1px solid #2a8a50; }
   .badge-fail { background: rgba(201,76,76,0.15); color: #c94c4c; border: 1px solid #c94c4c; }
-  .badge-warn { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid #c9a84c; }
-  .badge-na   { background: rgba(100,100,100,0.15); color: #888; border: 1px solid #555; }
+  .badge-warn { background: rgba(201,168,76,0.15); color: #8a6a10; border: 1px solid #c9a84c; }
+  .badge-na   { background: rgba(100,100,100,0.1); color: #888; border: 1px solid #ccc; }
 
   .session-stat {
-    background: rgba(201,168,76,0.06);
-    border: 1px solid rgba(201,168,76,0.15);
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.25);
     padding: 1rem 1.5rem;
     text-align: center;
   }
@@ -129,26 +111,26 @@ st.markdown("""
     text-transform: uppercase; color: #8a7a50; margin-top: 0.3rem;
   }
   .prompt-box {
-    background: #0f0d08; border-left: 2px solid #c9a84c;
-    padding: 0.8rem 1rem; font-size: 0.8rem; color: #b8a070;
+    background: #f5edd8; border-left: 2px solid #c9a84c;
+    padding: 0.8rem 1rem; font-size: 0.8rem; color: #6b5a30;
     font-style: italic; line-height: 1.6; margin-top: 0.8rem;
   }
   .reasoning-box {
     font-size: 0.78rem; color: #8a7a50; font-style: italic;
     line-height: 1.6; margin-top: 0.6rem; padding-top: 0.6rem;
-    border-top: 1px solid rgba(201,168,76,0.1);
+    border-top: 1px solid rgba(201,168,76,0.2);
   }
   .section-title {
     font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
     color: #c9a84c; margin-bottom: 1.2rem; padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
   }
   .error-box {
-    background: rgba(201,76,76,0.1); border: 1px solid rgba(201,76,76,0.3);
+    background: rgba(201,76,76,0.08); border: 1px solid rgba(201,76,76,0.3);
     padding: 1rem; color: #c94c4c; font-size: 0.85rem;
   }
   .img-missing {
-    background: #1c1608; border: 1px dashed rgba(201,168,76,0.2);
+    background: #f5edd8; border: 1px dashed rgba(201,168,76,0.3);
     display: flex; align-items: center; justify-content: center;
     height: 300px; color: #8a7a50;
     font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
@@ -158,7 +140,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ── Header ─────────────────────────────────────────────────────────────────────
 components.html("""
 <!DOCTYPE html>
 <html>
@@ -166,10 +147,10 @@ components.html("""
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background: #0f0d08; }
+body { background: #faf6ee; }
 .header {
-  background: #0f0d08;
-  border-bottom: 1px solid rgba(201,168,76,0.25);
+  background: #faf6ee;
+  border-bottom: 1px solid rgba(201,168,76,0.3);
   padding: 2rem 3rem 1.5rem;
   display: flex; justify-content: space-between; align-items: flex-end;
 }
@@ -180,12 +161,13 @@ body { background: #0f0d08; }
 }
 .title-block h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2.8rem; font-weight: 300; color: #faf6ee; line-height: 1;
+  font-size: 2.8rem; font-weight: 300; color: #1c1608; line-height: 1;
 }
 .title-block h1 em { font-style: italic; }
 .title-block h1 span {
-  background: linear-gradient(135deg, #6b4e1a, #c9a84c, #f5e080, #c9a84c);
+  background: linear-gradient(135deg, #6b4e1a, #c9a84c, #a07828, #c9a84c);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .meta {
   font-family: 'Jost', sans-serif; font-weight: 200;
@@ -202,7 +184,7 @@ body { background: #0f0d08; }
   </div>
   <div class="meta">
     FLUX.1-schnell · LangGraph · Groq<br>
-    Claude Vision Scorer
+    Groq Vision Scorer
   </div>
 </div>
 </body>
@@ -212,21 +194,14 @@ body { background: #0f0d08; }
 st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
 
 
+# ── Keys loaded silently from .env ─────────────────────────────────────────────
+hf_token = os.environ.get("HF_TOKEN", "")
+anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
+groq_key = os.environ.get("GROQ_API_KEY", "")
+
+
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("<div class='section-title'>Eval Configuration</div>", unsafe_allow_html=True)
-
-    hf_token = st.text_input("HuggingFace Token", type="password",
-                              value=os.environ.get("HF_TOKEN", ""),
-                              help="Required for image generation")
-    anthropic_key = st.text_input("Anthropic API Key", type="password",
-                                  value=os.environ.get("ANTHROPIC_API_KEY", ""),
-                                  help="Required for auto-scoring")
-    groq_key = st.text_input("Groq API Key", type="password",
-                              value=os.environ.get("GROQ_API_KEY", ""),
-                              help="Required for the styling agent")
-
-    st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
     st.markdown("<div class='section-title'>Test Selection</div>", unsafe_allow_html=True)
 
     test_options = {f"[{t['id']}] {t['label']}": t["id"] for t in TEST_PROMPTS}
@@ -242,29 +217,27 @@ with st.sidebar:
 
     results_dir = os.path.join(os.path.dirname(__file__), "eval_results")
     result_files = sorted(glob.glob(os.path.join(results_dir, "results_*.json")), reverse=True)
-    result_labels = ["— Run new eval —"] + [os.path.basename(f) for f in result_files]
+    result_labels = ["-- Run new eval --"] + [os.path.basename(f) for f in result_files]
     selected_result_file = st.selectbox("Load past results", result_labels)
 
 
 # ── State ──────────────────────────────────────────────────────────────────────
 if "eval_results" not in st.session_state:
     st.session_state.eval_results = None
-if "running" not in st.session_state:
-    st.session_state.running = False
 
 
 # ── Load past results ──────────────────────────────────────────────────────────
-if selected_result_file != "— Run new eval —" and st.session_state.eval_results is None:
+if selected_result_file != "-- Run new eval --" and st.session_state.eval_results is None:
     path = os.path.join(results_dir, selected_result_file)
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         st.session_state.eval_results = json.load(f)
 
 
-# ── Run button ─────────────────────────────────────────────────────────────────
+# ── Run + Clear buttons ────────────────────────────────────────────────────────
 col_run, col_clear = st.columns([2, 1])
 
 with col_run:
-    run_clicked = st.button("▶  Run Eval Pipeline", use_container_width=True)
+    run_clicked = st.button("Run Eval Pipeline", use_container_width=True)
 with col_clear:
     if st.button("Clear Results", use_container_width=True):
         st.session_state.eval_results = None
@@ -274,19 +247,9 @@ if run_clicked:
     if not selected_ids:
         st.warning("Select at least one test.")
     else:
-        # Inject keys into env for this session
-        if hf_token:   os.environ["HF_TOKEN"] = hf_token
-        if anthropic_key: os.environ["ANTHROPIC_API_KEY"] = anthropic_key
-        if groq_key:   os.environ["GROQ_API_KEY"] = groq_key
+        if hf_token:  os.environ["HF_TOKEN"] = hf_token
+        if groq_key:  os.environ["GROQ_API_KEY"] = groq_key
 
-        # Import eval runner inline
-        import importlib.util
-        spec = importlib.util.spec_from_file_location(
-            "run_eval", os.path.join(os.path.dirname(__file__), "run_eval.py")
-        )
-        eval_mod = importlib.util.load_from_spec = None
-
-        # We'll run inline rather than importing module to avoid reload issues
         from run_eval import run_eval
 
         progress_text = st.empty()
@@ -309,7 +272,7 @@ if run_clicked:
         st.rerun()
 
 
-# ── Results display ────────────────────────────────────────────────────────────
+# ── Helpers ────────────────────────────────────────────────────────────────────
 def score_badge(avg):
     if avg is None:
         return "<span class='pass-badge badge-na'>N/A</span>"
@@ -324,7 +287,7 @@ def score_badge(avg):
 def score_bar(label, score, max_score=5):
     if score is None:
         pct = 0
-        display = "—"
+        display = "-"
     else:
         pct = (score / max_score) * 100
         display = f"{score}/5"
@@ -348,10 +311,11 @@ SCORE_LABELS = {
     "body_awareness": "Body Awareness",
 }
 
+
+# ── Results display ────────────────────────────────────────────────────────────
 if st.session_state.eval_results:
     results = st.session_state.eval_results
 
-    # ── Summary stats ──────────────────────────────────────────────────────────
     all_avgs = [r["session_avg"] for r in results if r.get("session_avg")]
     total_looks = sum(len(r.get("looks", [])) for r in results)
     looks_with_images = sum(
@@ -360,14 +324,13 @@ if st.session_state.eval_results:
 
     st.markdown("<div class='section-title'>Session Summary</div>", unsafe_allow_html=True)
     c1, c2, c3, c4 = st.columns(4)
-    cols = [c1, c2, c3, c4]
     stats = [
-        (f"{round(sum(all_avgs)/len(all_avgs), 1)}/5" if all_avgs else "—", "Overall Avg Score"),
+        (f"{round(sum(all_avgs)/len(all_avgs), 1)}/5" if all_avgs else "-", "Overall Avg Score"),
         (f"{len(results)}", "Tests Run"),
         (f"{looks_with_images}/{total_looks}", "Images Generated"),
-        (f"{sum(1 for a in all_avgs if a >= 3.5)}/{len(all_avgs)}" if all_avgs else "—", "Tests Passed"),
+        (f"{sum(1 for a in all_avgs if a >= 3.5)}/{len(all_avgs)}" if all_avgs else "-", "Tests Passed"),
     ]
-    for col, (num, label) in zip(cols, stats):
+    for col, (num, label) in zip([c1, c2, c3, c4], stats):
         with col:
             st.markdown(
                 f"<div class='session-stat'><div class='stat-num'>{num}</div>"
@@ -377,7 +340,6 @@ if st.session_state.eval_results:
 
     st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
 
-    # ── Per-test results ───────────────────────────────────────────────────────
     for test in results:
         avg = test.get("session_avg")
         badge = score_badge(avg)
@@ -393,11 +355,11 @@ if st.session_state.eval_results:
         )
 
         if test.get("error"):
-            st.markdown(f"<div class='error-box'>⚠ {test['error']}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='error-box'>Error: {test['error']}</div>", unsafe_allow_html=True)
             continue
 
         for look in test.get("looks", []):
-            with st.expander(f"Look {look['look_index']} — {look['outfit_name']}", expanded=True):
+            with st.expander(f"Look {look['look_index']} - {look['outfit_name']}", expanded=True):
                 img_col, score_col = st.columns([1, 1])
 
                 with img_col:
@@ -422,9 +384,7 @@ if st.session_state.eval_results:
                         f"Jewellery: {look.get('jewellery', 'none')}</div>",
                         unsafe_allow_html=True,
                     )
-                    st.markdown(
-                        "**Items:** " + ", ".join(look.get("items", [])),
-                    )
+                    st.markdown("**Items:** " + ", ".join(look.get("items", [])))
                     st.markdown("<div style='height:0.8rem'></div>", unsafe_allow_html=True)
 
                     scores_html = "".join(
@@ -447,13 +407,12 @@ if st.session_state.eval_results:
                             unsafe_allow_html=True,
                         )
 
-        st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
-
 else:
-    # Empty state
     st.markdown("""
 <div style='text-align:center;padding:5rem 0;'>
-  <div style='font-family:Cormorant Garamond,serif;font-size:3rem;color:rgba(201,168,76,0.2);margin-bottom:1rem'>🪞</div>
+  <div style='font-family:Cormorant Garamond,serif;font-size:3rem;color:rgba(201,168,76,0.5);margin-bottom:1rem'>
+    Mi Armoire
+  </div>
   <div style='font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;color:#8a7a50'>
     Select tests on the left and click Run Eval Pipeline
   </div>

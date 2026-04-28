@@ -1,0 +1,102 @@
+[
+  {
+    "id": "T03",
+    "label": "Evening / Formal",
+    "occasion": "Evening",
+    "input": "Black satin slip dress, white oversized blazer, black stiletto heels, silver strappy heels. Jewellery: diamond stud earrings, silver tennis bracelet. I'm 5'2\" and 125 lbs, petite frame.",
+    "looks": [
+      {
+        "look_index": 1,
+        "outfit_name": "Formal Night",
+        "occasion": "Black tie event",
+        "items": [
+          "black satin slip dress",
+          "black stiletto heels"
+        ],
+        "jewellery": "silver",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing black satin slip dress, black stiletto heels, wearing silver jewellery, height 5'2\", Black tie event setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T03_look1.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 5,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 5,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt with a woman wearing a black satin slip dress and black stiletto heels, suitable for a black-tie event. The visual quality is high with sharp focus and soft natural lighting. The outfit makes sense as a real styled look for a formal evening. The setting matches the occasion. However, the woman's height seems slightly taller than the described 5'2\".",
+        "look_avg": 4.8
+      },
+      {
+        "look_index": 2,
+        "outfit_name": "Glamorous Evening",
+        "occasion": "Cocktail party",
+        "items": [
+          "black satin slip dress",
+          "silver strappy heels"
+        ],
+        "jewellery": "silver",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing black satin slip dress, silver strappy heels, wearing silver jewellery, height 5'2\", Cocktail party setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T03_look2.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 5,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 5,
+          "body_awareness": 4
+        },
+        "reasoning": "The image fully adheres to the prompt with a woman wearing a black satin slip dress, silver strappy heels, and silver jewelry, set in a clean and minimal background with soft natural lighting. The visual quality is sharp and of high resolution. The outfit makes sense for a styled look at a cocktail party. However, the woman's height appears to be slightly taller than the specified 5'2\".",
+        "look_avg": 4.8
+      },
+      {
+        "look_index": 3,
+        "outfit_name": "Chic Affair",
+        "occasion": "Formal luncheon",
+        "items": [
+          "white oversized blazer",
+          "black satin slip dress",
+          "black stiletto heels"
+        ],
+        "jewellery": "none",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white oversized blazer, black satin slip dress, black stiletto heels, height 5'2\", Formal luncheon setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T03_look3.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt with a few discrepancies, such as missing jewelry and a setting that feels more like a daytime event than an evening one. The visual quality is high with sharp focus and realistic rendering. The outfit is coherently styled and suitable for a formal occasion. However, the setting does not strongly evoke an evening atmosphere, and the model's height seems slightly taller than 5'2\".",
+        "look_avg": 4.2
+      },
+      {
+        "look_index": 4,
+        "outfit_name": "Red Carpet Ready",
+        "occasion": "Awards show",
+        "items": [
+          "black satin slip dress",
+          "black stiletto heels",
+          "white oversized blazer"
+        ],
+        "jewellery": "silver",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing black satin slip dress, black stiletto heels, white oversized blazer, wearing silver jewellery, height 5'2\", Awards show setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T03_look4.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": null,
+          "visual_quality": null,
+          "fashion_coherence": null,
+          "occasion_fit": null,
+          "body_awareness": null
+        },
+        "reasoning": "",
+        "look_avg": null
+      }
+    ],
+    "session_consistency": 5,
+    "session_avg": 4.6
+  }
+]

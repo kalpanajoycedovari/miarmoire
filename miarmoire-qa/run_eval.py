@@ -50,13 +50,13 @@ SCORE_LABELS = {
 
 def run_miarmoire(input_text: str, occasion: str) -> dict:
     from agent import run_agent
-    print(f"    → Running agent...")
+    print(f"    -> Running agent...")
     return run_agent(input_text, occasion)
 
 
 def score_image(image_b64: str, prompt: str, outfit: dict, occasion: str) -> dict:
     if not GROQ_API_KEY:
-        print("    ⚠ No GROQ_API_KEY — skipping auto-score")
+        print("    ! No GROQ_API_KEY - skipping auto-score")
         return {d: None for d in EVAL_DIMENSIONS}
 
     if image_b64.startswith("data:"):
@@ -65,11 +65,11 @@ def score_image(image_b64: str, prompt: str, outfit: dict, occasion: str) -> dic
     system_prompt = """You are an expert image generation QA evaluator for a fashion AI system.
 Score the image on exactly these 5 dimensions, each from 1 to 5:
 
-1. prompt_adherence — do the garments/colours/accessories match what was requested?
-2. visual_quality — sharpness, realism, no artifacts or distorted anatomy
-3. fashion_coherence — does the outfit make sense as a real styled look?
-4. occasion_fit — does the image setting/mood match the stated occasion?
-5. body_awareness — does the body type/height seem to reflect the described person?
+1. prompt_adherence - do the garments/colours/accessories match what was requested?
+2. visual_quality - sharpness, realism, no artifacts or distorted anatomy
+3. fashion_coherence - does the outfit make sense as a real styled look?
+4. occasion_fit - does the image setting/mood match the stated occasion?
+5. body_awareness - does the body type/height seem to reflect the described person?
 
 Return ONLY valid JSON, no markdown, no explanation:
 {
@@ -120,7 +120,7 @@ Return ONLY valid JSON, no markdown, no explanation:
     )
 
     if response.status_code != 200:
-        print(f"    ⚠ Groq API error {response.status_code}: {response.text[:200]}")
+        print(f"    ! Groq API error {response.status_code}: {response.text[:200]}")
         return {d: None for d in EVAL_DIMENSIONS}
 
     raw = response.json()["choices"][0]["message"]["content"].strip()
@@ -130,7 +130,7 @@ Return ONLY valid JSON, no markdown, no explanation:
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
-        print(f"    ⚠ Could not parse score JSON: {raw[:100]}")
+        print(f"    ! Could not parse score JSON: {raw[:100]}")
         return {d: None for d in EVAL_DIMENSIONS}
 
 
@@ -154,12 +154,12 @@ def run_eval(test_ids: list = None):
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
     print(f"\n{'='*60}")
-    print(f"  MI ARMOIRE IMAGE GEN EVAL — {timestamp}")
+    print(f"  MI ARMOIRE IMAGE GEN EVAL - {timestamp}")
     print(f"  Running {len(prompts)} test(s)")
     print(f"{'='*60}\n")
 
     for test in prompts:
-        print(f"▶ [{test['id']}] {test['label']}")
+        print(f"> [{test['id']}] {test['label']}")
         test_result = {
             "id": test["id"],
             "label": test["label"],
@@ -173,7 +173,7 @@ def run_eval(test_ids: list = None):
         try:
             state = run_miarmoire(test["input"], test["occasion"])
         except Exception as e:
-            print(f"    ✗ Agent failed: {e}")
+            print(f"    x Agent failed: {e}")
             test_result["error"] = str(e)
             all_results.append(test_result)
             continue
@@ -182,12 +182,12 @@ def run_eval(test_ids: list = None):
         images = state.get("images", [])
         prompts_used = state.get("image_prompts", [])
 
-        print(f"    → Generated {len(outfits)} outfits, {len(images)} images")
+        print(f"    -> Generated {len(outfits)} outfits, {len(images)} images")
 
         look_scores = []
 
         for i, (outfit, image, img_prompt) in enumerate(zip(outfits, images, prompts_used)):
-            print(f"    → Scoring Look {i + 1}: {outfit.get('name', '?')}")
+            print(f"    -> Scoring Look {i + 1}: {outfit.get('name', '?')}")
 
             img_path = save_image(image, test["id"], i)
             is_valid_image = img_path is not None
@@ -195,7 +195,7 @@ def run_eval(test_ids: list = None):
             if is_valid_image:
                 scores = score_image(image, img_prompt, outfit, test["occasion"])
             else:
-                print(f"      ⚠ Image missing or error — status: {image}")
+                print(f"      ! Image missing or error - status: {image}")
                 scores = {d: None for d in EVAL_DIMENSIONS}
 
             dim_scores = {k: scores.get(k) for k in EVAL_DIMENSIONS}
@@ -236,22 +236,22 @@ def run_eval(test_ids: list = None):
         test_result["session_avg"] = round(sum(look_scores) / len(look_scores), 2) if look_scores else None
         all_results.append(test_result)
 
-        print(f"  ✓ [{test['id']}] Session avg: {test_result['session_avg']}\n")
+        print(f"  [OK] [{test['id']}] Session avg: {test_result['session_avg']}\n")
 
     json_path = os.path.join(OUTPUT_DIR, f"results_{timestamp}.json")
-    with open(json_path, "w") as f:
+    with open(json_path, "w", encoding="utf-8") as f:
         json.dump(all_results, f, indent=2)
-    print(f"\n✓ Results saved: {json_path}")
+    print(f"\n[OK] Results saved: {json_path}")
 
     report_path = generate_report(all_results, timestamp)
-    print(f"✓ Report saved: {report_path}")
+    print(f"[OK] Report saved: {report_path}")
 
     return all_results
 
 
 def generate_report(results: list, timestamp: str) -> str:
     lines = [
-        f"# 🪞 Mi Armoire — Image Gen Eval Report",
+        "# Mi Armoire - Image Gen Eval Report",
         f"**Generated:** {timestamp}  ",
         f"**Tests run:** {len(results)}",
         "",
@@ -269,12 +269,12 @@ def generate_report(results: list, timestamp: str) -> str:
         ]
 
         if test.get("error"):
-            lines.append(f"⚠ **Error:** {test['error']}")
+            lines.append(f"Error: {test['error']}")
             lines.append("")
             continue
 
         for look in test.get("looks", []):
-            status_icon = "✅" if look["image_status"] == "ok" else "❌"
+            status_icon = "[OK]" if look["image_status"] == "ok" else "[FAIL]"
             lines += [
                 f"### Look {look['look_index']}: {look['outfit_name']} {status_icon}",
                 f"**Occasion:** {look['occasion']}  ",
@@ -287,7 +287,7 @@ def generate_report(results: list, timestamp: str) -> str:
             ]
             for dim, label in SCORE_LABELS.items():
                 score = look["scores"].get(dim)
-                score_str = f"{score}/5" if score else "—"
+                score_str = f"{score}/5" if score else "-"
                 lines.append(f"| {label} | {score_str} |")
 
             if look.get("reasoning"):
@@ -301,13 +301,13 @@ def generate_report(results: list, timestamp: str) -> str:
     if all_avgs:
         overall = round(sum(all_avgs) / len(all_avgs), 2)
         lines += [
-            "## 📊 Overall Summary",
+            "## Overall Summary",
             f"**Overall pipeline avg:** {overall} / 5",
-            f"**Pass rate** (≥ 3.5 avg): {sum(1 for a in all_avgs if a >= 3.5)}/{len(all_avgs)} tests",
+            f"**Pass rate** (>= 3.5 avg): {sum(1 for a in all_avgs if a >= 3.5)}/{len(all_avgs)} tests",
         ]
 
     report_path = os.path.join(OUTPUT_DIR, f"report_{timestamp}.md")
-    with open(report_path, "w") as f:
+    with open(report_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
     return report_path
 
