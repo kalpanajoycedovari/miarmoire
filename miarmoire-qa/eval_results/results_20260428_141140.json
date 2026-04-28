@@ -1,0 +1,184 @@
+[
+  {
+    "id": "T01",
+    "label": "Minimal Wardrobe \u2014 Casual",
+    "occasion": "Casual",
+    "input": "I have a white fitted t-shirt, black high-waist jeans, and white Nike Air Force 1s. I also have gold hoop earrings. I'm 5'4\" and 130 lbs.",
+    "looks": [
+      {
+        "look_index": 1,
+        "outfit_name": "Casual Day",
+        "occasion": "Running errands",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "gold hoop earrings",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, wearing gold hoop earrings jewellery, height 5'4\", Running errands setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look1.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 5,
+          "body_awareness": 4,
+          "garment_count_accuracy": 2,
+          "background_cleanliness": 5,
+          "lighting_consistency": 5,
+          "skin_tone_consistency": 5,
+          "style_consistency": 5
+        },
+        "technical": {
+          "sharpness": 1.6,
+          "brightness": 156.3,
+          "contrast": 62.2,
+          "has_person": false,
+          "resolution": "665x886",
+          "aspect_ratio": 0.75,
+          "dominant_colours": [
+            "#c4c4bf",
+            "#b4a591",
+            "#2e211b",
+            "#e2e5e7",
+            "#734f3c"
+          ]
+        },
+        "reasoning": "",
+        "look_avg": 4.5
+      },
+      {
+        "look_index": 2,
+        "outfit_name": "Sporty Chic",
+        "occasion": "Working out or athletic event",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "none",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, height 5'4\", Working out or athletic event setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look2.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 4,
+          "occasion_fit": 3,
+          "body_awareness": 4,
+          "garment_count_accuracy": 5,
+          "background_cleanliness": 5,
+          "lighting_consistency": 5,
+          "skin_tone_consistency": 5,
+          "style_consistency": 4
+        },
+        "technical": {
+          "sharpness": 1.1,
+          "brightness": 160.8,
+          "contrast": 50.7,
+          "has_person": true,
+          "resolution": "665x886",
+          "aspect_ratio": 0.75,
+          "dominant_colours": [
+            "#a09788",
+            "#acaeaa",
+            "#e1e1da",
+            "#1c1411",
+            "#7c5741"
+          ]
+        },
+        "reasoning": "",
+        "look_avg": 4.4
+      },
+      {
+        "look_index": 3,
+        "outfit_name": "Night Out",
+        "occasion": "Dinner or evening event",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "gold hoop earrings",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, wearing gold hoop earrings jewellery, height 5'4\", Dinner or evening event setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look3.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 2,
+          "body_awareness": 5,
+          "garment_count_accuracy": 2,
+          "background_cleanliness": 5,
+          "lighting_consistency": 5,
+          "skin_tone_consistency": 5,
+          "style_consistency": 2
+        },
+        "technical": {
+          "sharpness": 1.0,
+          "brightness": 128.0,
+          "contrast": 51.8,
+          "has_person": false,
+          "resolution": "665x886",
+          "aspect_ratio": 0.75,
+          "dominant_colours": [
+            "#8b765c",
+            "#ad9f8a",
+            "#ccc5bd",
+            "#29211b",
+            "#6c3d25"
+          ]
+        },
+        "reasoning": "",
+        "look_avg": 4.0
+      },
+      {
+        "look_index": 4,
+        "outfit_name": "Everyday Ease",
+        "occasion": "Daily activities or school",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "gold hoop earrings",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, wearing gold hoop earrings jewellery, height 5'4\", Daily activities or school setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look4.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 5,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 5,
+          "body_awareness": 4,
+          "garment_count_accuracy": 5,
+          "background_cleanliness": 5,
+          "lighting_consistency": 5,
+          "skin_tone_consistency": 5,
+          "style_consistency": 5
+        },
+        "technical": {
+          "sharpness": 1.3,
+          "brightness": 145.5,
+          "contrast": 56.5,
+          "has_person": true,
+          "resolution": "665x886",
+          "aspect_ratio": 0.75,
+          "dominant_colours": [
+            "#a89a87",
+            "#b1b1ac",
+            "#302927",
+            "#cccfd0",
+            "#80513a"
+          ]
+        },
+        "reasoning": "",
+        "look_avg": 4.9
+      }
+    ],
+    "session_consistency": 5,
+    "session_avg": 4.45
+  }
+]
