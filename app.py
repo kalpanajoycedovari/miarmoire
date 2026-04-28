@@ -77,7 +77,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ── HERO (full HTML via components) ───────────────────────────────────────────
+# ── HERO ───────────────────────────────────────────────────────────────────────
 components.html("""
 <!DOCTYPE html>
 <html>
@@ -137,7 +137,6 @@ components.html("""
 <body>
 <div class="hero">
   <svg viewBox="0 0 1400 480" xmlns="http://www.w3.org/2000/svg">
-    <!-- orbs -->
     <circle cx="110" cy="75" r="19" fill="#c9a84c" opacity="0.88"/>
     <circle cx="1290" cy="110" r="27" fill="#e8cc7a" opacity="0.82"/>
     <circle cx="1350" cy="370" r="13" fill="#c9a84c" opacity="0.68"/>
@@ -146,7 +145,6 @@ components.html("""
     <circle cx="1110" cy="55" r="9"  fill="#c9a84c" opacity="0.48"/>
     <circle cx="210" cy="420" r="10" fill="#e8cc7a" opacity="0.58"/>
     <circle cx="950" cy="420" r="7"  fill="#c9a84c" opacity="0.42"/>
-    <!-- wireframe geodesic sphere -->
     <g stroke="#c9a84c" stroke-width="0.9" fill="none" opacity="0.32" transform="translate(590,95)">
       <ellipse cx="100" cy="100" rx="102" ry="102"/>
       <ellipse cx="100" cy="100" rx="102" ry="41"/>
@@ -158,17 +156,13 @@ components.html("""
       <line x1="8"   y1="60"  x2="192" y2="140"/>
       <line x1="8"   y1="140" x2="192" y2="60"/>
     </g>
-    <!-- gold ring -->
     <ellipse cx="1060" cy="95" rx="66" ry="23" stroke="#c9a84c" stroke-width="4.5" fill="none" opacity="0.88" transform="rotate(-20 1060 95)"/>
-    <!-- solid pyramids -->
     <polygon points="155,348 192,286 229,348" fill="#c9a84c" opacity="0.82"/>
     <polygon points="1185,358 1215,306 1245,358" fill="#e8cc7a" opacity="0.70"/>
     <polygon points="1160,385 1178,358 1196,385 1178,412" fill="#c9a84c" opacity="0.52"/>
-    <!-- wireframe diamonds -->
     <polygon points="1290,235 1312,208 1334,235 1312,262" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.58"/>
     <polygon points="75,178 97,152 119,178 97,204"  stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.48"/>
     <polygon points="480,38  496,18  512,38  496,58"  stroke="#c9a84c" stroke-width="1"   fill="none" opacity="0.38"/>
-    <!-- small solid diamond -->
     <polygon points="1310,158 1322,140 1334,158 1322,176" fill="#c9a84c" opacity="0.58"/>
   </svg>
   <div class="hero-nav">
@@ -255,19 +249,16 @@ with right:
 
 # ── RUN AGENT ─────────────────────────────────────────────────────────────────
 if go and user_input.strip():
-    if not os.environ.get("HF_TOKEN"):
-        st.error("HF_TOKEN not found. Please check your .env file.")
-    else:
-        with st.spinner("Curating your looks…"):
-            try:
-                result = run_agent(user_input, occasion_filter)
-                st.session_state.results = result
-                st.session_state.last_input = user_input
-                st.session_state.last_occasion = occasion_filter
-            except Exception as e:
-                st.error(f"Agent error: {e}")
-                st.session_state.results = None
-        st.rerun()
+    with st.spinner("Curating your looks…"):
+        try:
+            result = run_agent(user_input, occasion_filter)
+            st.session_state.results = result
+            st.session_state.last_input = user_input
+            st.session_state.last_occasion = occasion_filter
+        except Exception as e:
+            st.error(f"Agent error: {e}")
+            st.session_state.results = None
+    st.rerun()
 elif go and not user_input.strip():
     st.warning("Please describe your wardrobe first.")
 
@@ -313,12 +304,14 @@ if "results" in st.session_state and st.session_state.results:
             if i < len(images) and images[i] and images[i] not in ("error", "loading", "auth_error", ""):
                 st.image(images[i], use_container_width=True)
             else:
-                status = images[i] if i < len(images) else "error"
-                msg = "Warming up — retry in 30s" if status == "loading" else "Check your HF token" if status == "auth_error" else "Image unavailable"
-                st.markdown(f"""
-<div style="background:#f5f0e8;min-height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
+                st.markdown("""
+<div style="background:#f5f0e8;min-height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;padding:2rem;">
   <div style="width:28px;height:28px;border:1px solid #c9a84c;transform:rotate(45deg);"></div>
-  <span style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:#c9a84c;font-weight:200;">{msg}</span>
+  <span style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#c9a84c;letter-spacing:0.05em;">Image Generation Paused</span>
+  <span style="font-family:'Cormorant Garamond',serif;font-size:0.92rem;font-style:italic;color:#8a7a50;text-align:center;line-height:1.8;max-width:300px;">
+    Monthly HuggingFace credits have been reached.<br>
+    Full image generation resumes <strong style="color:#c9a84c;">1st May 2026</strong>.
+  </span>
 </div>""", unsafe_allow_html=True)
 
         st.markdown('<hr class="gold-rule">', unsafe_allow_html=True)
