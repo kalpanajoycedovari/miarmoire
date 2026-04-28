@@ -1,0 +1,104 @@
+[
+  {
+    "id": "T02",
+    "label": "Full Wardrobe \u2014 Mixed Occasions",
+    "occasion": "Any",
+    "input": "Tops: white linen button-up, black silk blouse, cream knit jumper, striped navy tee. Bottoms: tailored black trousers, light wash straight jeans, midi floral skirt, beige cargo pants. Shoes: white trainers, black block heel mules, tan leather loafers, strappy gold sandals. Jewellery: gold layered necklaces, pearl studs, silver cuff bracelet. I'm 5'7\" and 145 lbs, fairly athletic build.",
+    "looks": [
+      {
+        "look_index": 1,
+        "outfit_name": "Casual Chic",
+        "occasion": "Weekend brunch",
+        "items": [
+          "striped navy tee",
+          "light wash straight jeans",
+          "white trainers"
+        ],
+        "jewellery": "none",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing striped navy tee, light wash straight jeans, white trainers, height 5'7\", Weekend brunch setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look1.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 5,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 5
+        },
+        "reasoning": "The image adheres to the prompt with a woman wearing a striped navy tee, light wash straight jeans, and white trainers. The visual quality is high with sharp focus and photorealistic rendering. The outfit makes sense as a real styled look, showcasing fashion coherence. However, the setting does not clearly evoke a weekend brunch atmosphere, affecting the occasion fit score. The model's height appears to align with the described 5'7\".",
+        "look_avg": 4.6
+      },
+      {
+        "look_index": 2,
+        "outfit_name": "Office Elegance",
+        "occasion": "Work meeting",
+        "items": [
+          "white linen button-up",
+          "tailored black trousers",
+          "black block heel mules"
+        ],
+        "jewellery": "pearl studs",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white linen button-up, tailored black trousers, black block heel mules, wearing pearl studs jewellery, height 5'7\", Work meeting setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look2.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt with some minor discrepancies, such as missing black block heel mules and an unspecified setting. The visual quality is high with sharp focus and clean minimal background. The outfit is coherent and stylish. The occasion fit is not fully aligned as it doesn't clearly depict a work meeting setting. The body type and height seem to reflect the described person.",
+        "look_avg": 4.2
+      },
+      {
+        "look_index": 3,
+        "outfit_name": "Garden Party",
+        "occasion": "Outdoor event",
+        "items": [
+          "cream knit jumper",
+          "midi floral skirt",
+          "tan leather loafers"
+        ],
+        "jewellery": "gold layered necklaces",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing cream knit jumper, midi floral skirt, tan leather loafers, wearing gold layered necklaces jewellery, height 5'7\", Outdoor event setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look3.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt by featuring a woman in a cream knit jumper and a midi floral skirt with gold layered necklaces. However, the tan leather loafers are not visible. The visual quality is high with sharp focus and photorealistic rendering. The outfit is coherently styled for a fashion editorial. The setting appears to be an outdoor event but lacks specificity to the 'Garden Party' theme. The model's height seems to align with 5'7\".",
+        "look_avg": 4.2
+      },
+      {
+        "look_index": 4,
+        "outfit_name": "Evening Out",
+        "occasion": "Dinner date",
+        "items": [
+          "black silk blouse",
+          "tailored black trousers",
+          "strappy gold sandals"
+        ],
+        "jewellery": "silver cuff bracelet",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing black silk blouse, tailored black trousers, strappy gold sandals, wearing silver cuff bracelet jewellery, height 5'7\", Dinner date setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look4.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt with a few discrepancies, such as the absence of strappy gold sandals and the presence of a belt. The visual quality is high with sharp focus and clean minimal background. The outfit makes sense as a real styled look. The setting matches somewhat but seems less formal than a dinner date. The model's height seems close to 5'7\".",
+        "look_avg": 4.2
+      }
+    ],
+    "session_consistency": 5,
+    "session_avg": 4.3
+  }
+]

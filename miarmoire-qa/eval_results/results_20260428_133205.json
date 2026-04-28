@@ -1,0 +1,104 @@
+[
+  {
+    "id": "T02",
+    "label": "Full Wardrobe \u2014 Mixed Occasions",
+    "occasion": "Any",
+    "input": "Tops: white linen button-up, black silk blouse, cream knit jumper, striped navy tee. Bottoms: tailored black trousers, light wash straight jeans, midi floral skirt, beige cargo pants. Shoes: white trainers, black block heel mules, tan leather loafers, strappy gold sandals. Jewellery: gold layered necklaces, pearl studs, silver cuff bracelet. I'm 5'7\" and 145 lbs, fairly athletic build.",
+    "looks": [
+      {
+        "look_index": 1,
+        "outfit_name": "Workwear Chic",
+        "occasion": "Office meeting",
+        "items": [
+          "white linen button-up",
+          "tailored black trousers",
+          "black block heel mules"
+        ],
+        "jewellery": "gold layered necklaces",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white linen button-up, tailored black trousers, black block heel mules, wearing gold layered necklaces jewellery, height 5'7\", Office meeting setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look1.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt with a few minor discrepancies, such as missing shoes and an unclear setting. The visual quality is high with sharp focus and clean minimal background. The outfit demonstrates high fashion coherence. However, the occasion fit is not well-represented as the setting doesn't clearly indicate an office meeting. The body type and height seem to align with the description.",
+        "look_avg": 4.2
+      },
+      {
+        "look_index": 2,
+        "outfit_name": "Casual Day Out",
+        "occasion": "Brunch with friends",
+        "items": [
+          "striped navy tee",
+          "light wash straight jeans",
+          "white trainers"
+        ],
+        "jewellery": "none",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing striped navy tee, light wash straight jeans, white trainers, height 5'7\", Brunch with friends setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look2.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 5,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 5
+        },
+        "reasoning": "The image matches the prompt's clothing items and description of a professional fashion shoot with high visual quality. The woman's height appears to align with 5'7\". The outfit is coherent and stylish. However, the setting doesn't strongly evoke a 'brunch with friends' atmosphere, which is why occasion_fit is scored lower.",
+        "look_avg": 4.6
+      },
+      {
+        "look_index": 3,
+        "outfit_name": "Date Night",
+        "occasion": "Dinner at a restaurant",
+        "items": [
+          "black silk blouse",
+          "midi floral skirt",
+          "strappy gold sandals"
+        ],
+        "jewellery": "pearl studs",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing black silk blouse, midi floral skirt, strappy gold sandals, wearing pearl studs jewellery, height 5'7\", Dinner at a restaurant setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look3.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 4,
+          "body_awareness": 4
+        },
+        "reasoning": "The image largely adheres to the prompt, with a woman wearing a black silk blouse and a midi floral skirt, and pearl jewellery. However, the strappy gold sandals are not visible. The visual quality is high, with sharp focus and photorealistic rendering. The outfit is coherently styled for a fashion editorial. The setting matches a dinner date at a restaurant, though the background could be more minimal. The woman's height appears to be around 5'7\".",
+        "look_avg": 4.4
+      },
+      {
+        "look_index": 4,
+        "outfit_name": "Weekend Errands",
+        "occasion": "Running errands",
+        "items": [
+          "cream knit jumper",
+          "beige cargo pants",
+          "tan leather loafers"
+        ],
+        "jewellery": "silver cuff bracelet",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing cream knit jumper, beige cargo pants, tan leather loafers, wearing silver cuff bracelet jewellery, height 5'7\", Running errands setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T02_look4.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 5,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 5
+        },
+        "reasoning": "The image fully matches the prompt's clothing and accessories specifications, exhibits high visual quality with sharp focus and realism, and presents a coherent and stylish outfit suitable for a fashion editorial. However, the setting, while clean and minimal, does not strongly evoke a 'running errands' atmosphere, and thus scores lower on occasion fit.",
+        "look_avg": 4.6
+      }
+    ],
+    "session_consistency": 5,
+    "session_avg": 4.45
+  }
+]

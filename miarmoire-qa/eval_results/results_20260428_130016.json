@@ -1,0 +1,12 @@
+[
+  {
+    "id": "T01",
+    "label": "Minimal Wardrobe \u2014 Casual",
+    "occasion": "Casual",
+    "input": "I have a white fitted t-shirt, black high-waist jeans, and white Nike Air Force 1s. I also have gold hoop earrings. I'm 5'4\" and 130 lbs.",
+    "looks": [],
+    "session_consistency": null,
+    "session_avg": null,
+    "error": "cannot import name 'run_agent' from 'agent' (C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\..\\agent.py)"
+  }
+]

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "T01",
+    "label": "Minimal Wardrobe \u2014 Casual",
+    "occasion": "Casual",
+    "input": "I have a white fitted t-shirt, black high-waist jeans, and white Nike Air Force 1s. I also have gold hoop earrings. I'm 5'4\" and 130 lbs.",
+    "looks": [
+      {
+        "look_index": 1,
+        "outfit_name": "Casual Day",
+        "occasion": "Running errands",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "gold hoop earrings",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, wearing gold hoop earrings jewellery, height 5'4\", Running errands setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look1.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 5,
+          "body_awareness": 3
+        },
+        "reasoning": "The image matches most of the requested elements such as clothing and jewelry, but lacks the white Nike Air Force 1s and the specified height is not reflected, the visual quality and fashion coherence are well achieved, and the setting fits the casual occasion.",
+        "look_avg": 4.4
+      },
+      {
+        "look_index": 2,
+        "outfit_name": "Street Style",
+        "occasion": "Meeting friends",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "none",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, height 5'4\", Meeting friends setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look2.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 5,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 5,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt with a woman wearing a white fitted t-shirt, black high-waist jeans, and white Nike Air Force 1s. The visual quality is high with sharp focus and photorealistic rendering. The outfit makes sense for a casual setting like meeting friends. The height of the woman appears to be slightly above 5'4\" but close enough. The only deduction is for body awareness as the height seems slightly taller than specified.",
+        "look_avg": 4.8
+      },
+      {
+        "look_index": 3,
+        "outfit_name": "Simple Chic",
+        "occasion": "Date night",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "gold hoop earrings",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, wearing gold hoop earrings jewellery, height 5'4\", Date night setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look3.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 3,
+          "body_awareness": 4
+        },
+        "reasoning": "The image adheres to the prompt with a few minor discrepancies, such as the absence of a date night setting. The visual quality is high with sharp focus and clean minimal background. The outfit is coherently styled and suitable for a casual occasion. However, the setting does not match the date night ambiance requested, and the model's height seems slightly taller than 5'4\".",
+        "look_avg": 4.2
+      },
+      {
+        "look_index": 4,
+        "outfit_name": "Everyday Essential",
+        "occasion": "Work or school",
+        "items": [
+          "white fitted t-shirt",
+          "black high-waist jeans",
+          "white Nike Air Force 1s"
+        ],
+        "jewellery": "gold hoop earrings",
+        "image_prompt": "fashion editorial photography, full body shot, woman wearing white fitted t-shirt, black high-waist jeans, white Nike Air Force 1s, wearing gold hoop earrings jewellery, height 5'4\", Work or school setting, soft natural lighting, clean minimal background, high quality, sharp focus, professional fashion shoot, 8k, photorealistic",
+        "image_path": "C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\eval_results\\T01_look4.jpg",
+        "image_status": "ok",
+        "scores": {
+          "prompt_adherence": 4,
+          "visual_quality": 5,
+          "fashion_coherence": 5,
+          "occasion_fit": 4,
+          "body_awareness": 4
+        },
+        "reasoning": "The image largely adheres to the prompt with a few minor discrepancies, the visual quality is high, the outfit is coherently styled for a casual occasion, the setting somewhat matches but lacks context, and the model's height seems slightly above the specified 5'4\".",
+        "look_avg": 4.4
+      }
+    ],
+    "session_consistency": 5,
+    "session_avg": 4.45
+  }
+]

@@ -33,6 +33,7 @@ st.markdown("""
   [data-testid="stSidebar"] * { color: #1c1608 !important; }
   [data-testid="stSidebar"] .stSelectbox > div > div { background: #faf6ee !important; border: 1px solid #c9a84c !important; }
   [data-testid="stSidebar"] .stMultiSelect > div > div { background: #faf6ee !important; border: 1px solid rgba(201,168,76,0.4) !important; }
+  [data-testid="stSidebarCollapseButton"] { display: none !important; }
 
   .stButton > button {
     background: transparent !important;
@@ -135,6 +136,13 @@ st.markdown("""
     height: 300px; color: #8a7a50;
     font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
   }
+  .wait-banner {
+    background: #f5edd8; border: 1px solid rgba(201,168,76,0.4);
+    border-left: 3px solid #c9a84c;
+    padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+    font-size: 0.78rem; color: #6b5a30; line-height: 1.7;
+  }
+  .wait-banner strong { color: #1c1608; }
   #MainMenu, footer, header { visibility: hidden; }
 </style>
 """, unsafe_allow_html=True)
@@ -193,10 +201,8 @@ body { background: #faf6ee; }
 
 st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
 
-
 # ── Keys loaded silently from .env ─────────────────────────────────────────────
 hf_token = os.environ.get("HF_TOKEN", "")
-anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
 groq_key = os.environ.get("GROQ_API_KEY", "")
 
 
@@ -208,7 +214,7 @@ with st.sidebar:
     selected_labels = st.multiselect(
         "Select tests to run",
         options=list(test_options.keys()),
-        default=list(test_options.keys())[:3],
+        default=list(test_options.keys())[:1],
     )
     selected_ids = [test_options[l] for l in selected_labels]
 
@@ -249,6 +255,15 @@ if run_clicked:
     else:
         if hf_token:  os.environ["HF_TOKEN"] = hf_token
         if groq_key:  os.environ["GROQ_API_KEY"] = groq_key
+
+        st.markdown("""
+<div class='wait-banner'>
+  <strong>Heads up — this may take a few minutes.</strong><br>
+  HuggingFace credits are currently depleted. Images are being generated via Pollinations.ai as a free fallback.
+  Each look takes ~45 seconds to generate. Please keep this tab open and do not refresh.
+  Credits reset on <strong>1st May</strong> — after that, FLUX.1-schnell will be back at full speed.
+</div>
+""", unsafe_allow_html=True)
 
         from run_eval import run_eval
 

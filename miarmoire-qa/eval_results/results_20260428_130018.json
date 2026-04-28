@@ -1,0 +1,12 @@
+[
+  {
+    "id": "T03",
+    "label": "Evening / Formal",
+    "occasion": "Evening",
+    "input": "Black satin slip dress, white oversized blazer, black stiletto heels, silver strappy heels. Jewellery: diamond stud earrings, silver tennis bracelet. I'm 5'2\" and 125 lbs, petite frame.",
+    "looks": [],
+    "session_consistency": null,
+    "session_avg": null,
+    "error": "cannot import name 'run_agent' from 'agent' (C:\\Users\\ASUS\\miarmoire\\miarmoire-qa\\..\\agent.py)"
+  }
+]

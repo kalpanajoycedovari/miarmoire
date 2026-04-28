@@ -5,21 +5,17 @@ from typing import TypedDict, List, Dict, Any
 from langgraph.graph import StateGraph, END
 from langchain_groq import ChatGroq
 
-# ── State ──────────────────────────────────────────────────────────────────────
 class WardrobeState(TypedDict):
     user_input: str
     wardrobe: Dict[str, Any]
     outfits: List[Dict[str, str]]
     image_prompts: List[str]
-    images: List[str]          # base64 or URL strings
+    images: List[str]
     error: str
 
-# ── LLM ───────────────────────────────────────────────────────────────────────
 llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.7, api_key=os.environ.get("GROQ_API_KEY"))
 
-# ── Node 1: Parse wardrobe + body info ────────────────────────────────────────
 def parse_wardrobe(state: WardrobeState) -> WardrobeState:
-    """Extract clothing items, accessories, and body measurements from free text."""
     prompt = f"""
 You are a wardrobe parser. Extract all clothing items, accessories, jewellery, shoes, and body measurements from the user's description.
 
@@ -42,23 +38,18 @@ User description:
 """
     response = llm.invoke(prompt)
     raw = response.content.strip()
-
-    # Strip markdown code fences if present
     raw = re.sub(r"^```(?:json)?\s*", "", raw)
     raw = re.sub(r"\s*```$", "", raw)
 
     try:
         wardrobe = json.loads(raw)
     except json.JSONDecodeError:
-        # Graceful fallback
         wardrobe = {"raw": state["user_input"], "tops": [], "bottoms": [], "shoes": [], "accessories": [], "jewellery": [], "body": {}}
 
     return {**state, "wardrobe": wardrobe}
 
 
-# ── Node 2: Generate outfit combos ─────────────────────────────────────────────
 def generate_outfits(state: WardrobeState) -> WardrobeState:
-    """Create 4-5 styled outfit combinations with body-type-aware advice."""
     wardrobe_str = json.dumps(state["wardrobe"], indent=2)
     prompt = f"""
 You are a professional personal stylist. Based on the wardrobe and body measurements below, create 4 distinct outfit combinations.
@@ -72,7 +63,7 @@ Rules:
 - Each outfit should have a name, occasion, and styling tip
 - Consider colour coordination and balance
 
-Return ONLY valid JSON — no markdown, no explanation:
+Return ONLY valid JSON - no markdown, no explanation:
 [
   {{
     "name": "Outfit name",
@@ -98,9 +89,7 @@ Return exactly 4 outfits.
     return {**state, "outfits": outfits}
 
 
-# ── Node 3: Build image generation prompts ─────────────────────────────────────
 def build_image_prompts(state: WardrobeState) -> WardrobeState:
-    """Convert each outfit combo into a detailed Stable Diffusion prompt."""
     body = state["wardrobe"].get("body", {})
     height = body.get("height", "average height")
     prompts = []
@@ -125,43 +114,60 @@ def build_image_prompts(state: WardrobeState) -> WardrobeState:
     return {**state, "image_prompts": prompts}
 
 
-# ── Node 4: Generate images via HuggingFace ────────────────────────────────────
 def generate_images(state: WardrobeState) -> WardrobeState:
-    """Call HuggingFace Inference API to generate outfit images."""
+    """Call HuggingFace first, fall back to Pollinations.ai if credits depleted."""
     import requests
     import base64
+    from urllib.parse import quote
 
     hf_token = os.environ.get("HF_TOKEN", "")
-    if not hf_token:
-        return {**state, "error": "HF_TOKEN not set", "images": [""] * len(state["image_prompts"])}
-
     headers = {"Authorization": f"Bearer {hf_token}"}
-    api_url = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
+    hf_url = "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell"
 
     images = []
     for prompt in state["image_prompts"]:
-        try:
-            response = requests.post(
-                api_url,
-                headers=headers,
-                json={"inputs": prompt},
-                timeout=120
-            )
-            if response.status_code == 200:
-                b64 = base64.b64encode(response.content).decode("utf-8")
-                images.append(f"data:image/jpeg;base64,{b64}")
-            elif response.status_code == 503:
-                # Model loading — return placeholder
-                images.append("loading")
-            else:
-                images.append("error")
-        except Exception as e:
-            images.append("error")
+        image_data = None
+
+        # Try HuggingFace first
+        if hf_token:
+            try:
+                response = requests.post(
+                    hf_url,
+                    headers=headers,
+                    json={"inputs": prompt},
+                    timeout=120
+                )
+                if response.status_code == 200:
+                    b64 = base64.b64encode(response.content).decode("utf-8")
+                    image_data = f"data:image/jpeg;base64,{b64}"
+                elif response.status_code in (402, 503):
+                    print(f"    HF unavailable ({response.status_code}), falling back to Pollinations...")
+                else:
+                    print(f"    HF error {response.status_code}, falling back to Pollinations...")
+            except Exception as e:
+                print(f"    HF exception: {e}, falling back to Pollinations...")
+
+        # Fall back to Pollinations.ai
+        if not image_data:
+            try:
+                encoded_prompt = quote(prompt)
+                poll_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=768&height=1024&nologo=true"
+                response = requests.get(poll_url, timeout=120)
+                if response.status_code == 200:
+                    b64 = base64.b64encode(response.content).decode("utf-8")
+                    image_data = f"data:image/jpeg;base64,{b64}"
+                else:
+                    print(f"    Pollinations error {response.status_code}")
+                    image_data = "error"
+            except Exception as e:
+                print(f"    Pollinations exception: {e}")
+                image_data = "error"
+
+        images.append(image_data)
 
     return {**state, "images": images}
 
 
-# ── Build graph ────────────────────────────────────────────────────────────────
 def build_graph():
     graph = StateGraph(WardrobeState)
 
